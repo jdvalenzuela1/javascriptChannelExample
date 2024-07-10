@@ -48,12 +48,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                     onPressed: _handleKushkiCall,
                     child: const Text('Kushki Call'),
                   ),
-            isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-                    onPressed: _handleMercadoPagoCall,
-                    child: const Text('MercadoPago Call'),
-                  ),
           ],
         ),
       ),
@@ -67,29 +61,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     try {
       String response =
           await ref.read(kushkiService).getDeviceToken('1720473066356000');
-      _showDialog(response);
-    } catch (e) {
-      _showDialog(e.toString());
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
-  Future<void> _handleMercadoPagoCall() async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      String response =
-          await ref.read(mercadopagoService).generateSubscriptionToken(
-                "5416752602582580",
-                "11",
-                "2025",
-                "123",
-                "APRO",
-              );
       _showDialog(response);
     } catch (e) {
       _showDialog(e.toString());

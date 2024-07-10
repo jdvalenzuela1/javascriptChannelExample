@@ -25,7 +25,6 @@ class _ScriptWebViewState extends ConsumerState<ScriptWebView> {
             onWebViewCreated: (webViewController) async {
               await webViewController.loadFlutterAsset('lib/assets/index.html');
               ref.read(kushkiService).controller = webViewController;
-              ref.read(mercadopagoService).controller = webViewController;
             },
             javascriptChannels: {
               JavascriptChannel(
@@ -63,49 +62,6 @@ class _ScriptWebViewState extends ConsumerState<ScriptWebView> {
                   var jsonError = json.decode(message.message);
                   var error = Exception(jsonError);
                   ref.read(kushkiService).setChargeTokenError(error);
-                },
-              ),
-              JavascriptChannel(
-                name: 'DebbugingKushkiCommunication',
-                onMessageReceived: (_) {},
-              ),
-              JavascriptChannel(
-                name: 'MercadoPagoLibraryFailure',
-                onMessageReceived: (message) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Response'),
-                      content: const Text(
-                          'Hubo un error al cargar la librería de MercadoPago.'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: const Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    ),
-                  ).then((value) => Navigator.of(context).maybePop());
-                },
-              ),
-              JavascriptChannel(
-                name: 'MercadoPagoGenerateSubscriptionTokenSuccess',
-                onMessageReceived: (message) {
-                  var response = json.decode(message.message);
-                  var mappedJson = Map<String, dynamic>.from(response);
-                  ref
-                      .read(mercadopagoService)
-                      .setSubscriptionToken(mappedJson['token']);
-                },
-              ),
-              JavascriptChannel(
-                name: 'MercadoPagoGenerateSubscriptionTokenFailure',
-                onMessageReceived: (message) {
-                  var jsonError = json.decode(message.message);
-                  var error = Exception(jsonError);
-                  ref.read(mercadopagoService).setSubscriptionTokenError(error);
                 },
               ),
             },
