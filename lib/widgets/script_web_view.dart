@@ -23,8 +23,8 @@ class _ScriptWebViewState extends ConsumerState<ScriptWebView> {
           child: WebView(
             javascriptMode: JavascriptMode.unrestricted,
             onWebViewCreated: (webViewController) async {
-              await webViewController.loadFlutterAsset(
-                  'lib/app/assets/scripts/kushki_token_dev.html');
+              await webViewController
+                  .loadFlutterAsset('lib/assets/kushki_token_dev.html');
               ref.read(kushkiService).controller = webViewController;
             },
             javascriptChannels: {
@@ -43,6 +43,10 @@ class _ScriptWebViewState extends ConsumerState<ScriptWebView> {
                   var error = Exception(jsonError);
                   ref.read(kushkiService).setChargeTokenError(error);
                 },
+              ),
+              JavascriptChannel(
+                name: 'DebbugingKushkiCommunication',
+                onMessageReceived: (_) {},
               ),
             },
           ),

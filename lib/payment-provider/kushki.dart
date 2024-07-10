@@ -17,9 +17,8 @@ class KushkiService {
   int currentComunicationMilliseconds = 0;
   int maxComunicationMilliseconds;
 
-  Future<String> getDeviceToken() async {
+  Future<String> getDeviceToken(String subscriptionId) async {
     try {
-      var subscriptionId = '1669910001903000l';
       currentComunicationMilliseconds = 0;
       _loadingChargeToken = true;
       await controller.runJavascript(
@@ -48,9 +47,9 @@ class KushkiService {
     if (_loadingChargeToken == true &&
         currentComunicationMilliseconds < maxComunicationMilliseconds) {
       currentComunicationMilliseconds++;
-      if (Platform.isIOS) {
-        unawaited(controller.runJavascript('''wakeUpJavascriptChannel()'''));
-      }
+      // if (Platform.isIOS) {
+      //   unawaited(controller.runJavascript('''wakeUpJavascriptChannel()'''));
+      // }
       return Future.delayed(
           const Duration(milliseconds: 100), _loadChargeToken);
     } else if (_loadingChargeToken == true &&
