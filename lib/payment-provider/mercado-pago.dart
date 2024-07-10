@@ -22,11 +22,9 @@ class MercadoPagoService {
     String cardholderName,
   ) async {
     try {
-      print('pasa por aca');
       _loadingSubscriptionToken = true;
       await controller.runJavascript(
           '''generateSubscriptionToken("$cardNumber", $expirationMonth, $expirationYear, "$securityCode", "$cardholderName")''');
-      print('pasa por aca 2');
       var token = await _loadSubscriptionToken();
       _subscriptionToken = null;
       return token;
@@ -48,7 +46,6 @@ class MercadoPagoService {
   }
 
   Future<String> _loadSubscriptionToken() async {
-    print('pasa por aca 3');
     if (_loadingSubscriptionToken == true &&
         currentComunicationMilliseconds < maxComunicationMilliseconds) {
       currentComunicationMilliseconds++;
@@ -58,12 +55,9 @@ class MercadoPagoService {
         currentComunicationMilliseconds >= maxComunicationMilliseconds) {
       throw _subscriptionTokenError = Exception('Timeout');
     }
-    print('pasa por aca 4');
     if (_subscriptionToken == null) {
-      print('pasa por aca 5');
       throw _subscriptionTokenError;
     }
-    print('pasa por aca 6');
     return _subscriptionToken!;
   }
 }
