@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class KushkiService {
@@ -21,6 +19,7 @@ class KushkiService {
     try {
       currentComunicationMilliseconds = 0;
       _loadingChargeToken = true;
+      print('consulta');
       await controller.runJavascript(
           '''requestSubscriptionDeviceToken("$subscriptionId")''');
       var token = await _loadChargeToken();
@@ -44,6 +43,7 @@ class KushkiService {
   }
 
   Future<String> _loadChargeToken() async {
+    print('carhado');
     if (_loadingChargeToken == true &&
         currentComunicationMilliseconds < maxComunicationMilliseconds) {
       currentComunicationMilliseconds++;
@@ -63,5 +63,3 @@ class KushkiService {
     return _chargeToken!;
   }
 }
-
-final kushkiService = Provider((ref) => KushkiService(550));
