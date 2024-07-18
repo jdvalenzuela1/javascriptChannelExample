@@ -19,7 +19,7 @@ class KushkiService {
     try {
       currentComunicationMilliseconds = 0;
       _loadingChargeToken = true;
-      await controller.runJavascript(
+      await controller.runJavaScript(
           '''requestSubscriptionDeviceToken("$subscriptionId")''');
       var token = await _loadChargeToken();
       _chargeToken = null;

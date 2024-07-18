@@ -60,7 +60,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
     });
     try {
       String response =
-          await ref.read(kushkiService).getDeviceToken('1720473066356000');
+          await ref.read(kushkiService).getDeviceToken('1719499219053000');
       _showDialog(response);
     } catch (e) {
       _showDialog(e.toString());
